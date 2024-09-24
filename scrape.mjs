@@ -6,12 +6,12 @@ const scrapeWebsite = async () => {
     const year = '2024';
     const comicName = 'birdbrains';
 
-    for (let day = 1; day <= 31; day++) {
+    for (let day = 1; day <= 5; day++) {
         const dayString = day.toString().padStart(2, '0');
-        const url = 'https://www.gocomics.com/${comicName}/${year}/${month}/${dayString}';
+        const url = `https://www.gocomics.com/${comicName}/${year}/${month}/${dayString}`;
 
         try {
-            console.log(`Fetching page for ${month}/${dayString}/${year}: ${url}`);
+            console.log(`Fetching page for ${dayString}/${month}/${year}: ${url}`);
             let response = await fetch(url);
 
             if (!response.ok) {
@@ -21,15 +21,16 @@ const scrapeWebsite = async () => {
 
             let html = await response.text();
             const $ = cheerio.load(html);
-            let img = $('.comic-image img');
+            let img = $('.item-comic-image img');
 
             if (img.attr('src')) {
                 console.log(`Found image: ${img.attr('src')}`);
+                //console.log(`Found image: ${img.attr('src')}`);
             } else {
-                console.log(`No image found on ${month}/${dayString}/${year}`);
+                console.log(`No image found on ${dayString}/${month}/${year}`);
             }
         } catch (error) {
-            console.log(`Error fetching page for ${month}/${dayString}/${year}:`, error);
+            console.log(`Error fetching page for ${dayString}/${month}/${year}:`, error);
         }
     }
 };
