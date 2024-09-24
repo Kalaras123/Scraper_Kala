@@ -21,11 +21,14 @@ const scrapeWebsite = async () => {
 
             let html = await response.text();
             const $ = cheerio.load(html);
-            let img = $('.item-comic-image img');
+            let img1 = $('.item-comic-image img');
+            let img2 = $('.js-item-comic-link');
 
-            if (img.attr('src')) {
-                console.log(`Found image: ${img.attr('src')}`);
-                //console.log(`Found image: ${img.attr('src')}`);
+            if (img1.attr('src')) {
+                console.log(`Found image: ${img1.attr('src')}`);
+                console.log(`alt: ${img1.attr('alt')}`);
+                console.log(`title: ${img2.attr('title')}`);
+                console.log(`srcset: ${img1.attr('srcset')}`);
             } else {
                 console.log(`No image found on ${dayString}/${month}/${year}`);
             }
